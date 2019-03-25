@@ -1,3 +1,15 @@
+@font-face {
+    src: url('../assets/fonts/TiemposText-Bold.otf');
+    font-family: Tiempos;
+    font-weight: bold;
+}
+
+@font-face {
+    src: url('../assets/fonts/lineto-circular-pro-book.eot');
+    font-family: Circular;
+    font-weight: normal;
+}
+
 @tailwind preflight;
 @tailwind components;
 
@@ -5,12 +17,12 @@
     @apply font-bold py-2 px-4 rounded-full;
 }
 
-.btn-blue {
-    @apply bg-blue text-white;
+.btn-black {
+    @apply bg-black text-white;
 }
 
 .btn-blue:hover {
-    @apply bg-blue-dark;
+    @apply bg-grey-darkest;
 }
 
 @tailwind utilities;

@@ -171,12 +171,7 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"../../../../.nvm/versions/node/v11.2.0/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"src/index.css":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"./../assets/fonts/TiemposText-Bold.otf":[["TiemposText-Bold.a94c8fc8.otf","assets/fonts/TiemposText-Bold.otf"],"assets/fonts/TiemposText-Bold.otf"],"./../assets/fonts/lineto-circular-pro-book.eot":[["lineto-circular-pro-book.978d87f1.eot","assets/fonts/lineto-circular-pro-book.eot"],"assets/fonts/lineto-circular-pro-book.eot"],"_css_loader":"../../../../.nvm/versions/node/v11.2.0/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../../../.nvm/versions/node/v11.2.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./bundle-url":"../../../../.nvm/versions/node/v11.2.0/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"../../../../.nvm/versions/node/v11.2.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

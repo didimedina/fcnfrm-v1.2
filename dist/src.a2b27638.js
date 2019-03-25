@@ -1862,12 +1862,12 @@ button.addEventListener('click', function () {
   alert('hello!');
 });
 (0, _animejs.default)({
-  targets: '.anim-scale',
-  scale: [0.8, 1],
-  opacity: [0, 1],
-  translateY: [150, 0],
+  targets: '.anim-mouse-dot',
+  translateY: [0, 24],
+  loop: true,
+  opacity: [1, 0],
   easing: 'easeOutQuad',
-  duration: 800
+  duration: 1200
 });
 },{"animejs":"node_modules/animejs/lib/anime.es.js"}],"../../../../.nvm/versions/node/v11.2.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -1896,7 +1896,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52918" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59521" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
