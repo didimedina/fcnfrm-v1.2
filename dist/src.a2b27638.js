@@ -1857,12 +1857,8 @@ var _animejs = _interopRequireDefault(require("animejs"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var button = document.querySelector('.alert');
-button.addEventListener('click', function () {
-  alert('hello!');
-});
 (0, _animejs.default)({
-  targets: '.anim-mouse-dot',
+  targets: '.anim-dot',
   translateY: [0, 24],
   loop: true,
   opacity: [1, 0],
@@ -1896,7 +1892,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59521" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55055" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
