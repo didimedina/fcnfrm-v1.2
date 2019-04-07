@@ -25,5 +25,47 @@
     @apply bg-grey-darkest;
 }
 
+.anim-container {
+    padding: 20px 0;
+}
+
+.timeline {
+    height: 100%;
+    border-right: 5px solid gray;
+    flex: 0 0 50%;
+    content: '';
+    align-items: stretch;
+    direction: ltr;
+}
+
+.timeline-message {
+    position: absolute;
+    padding: 10px;
+}
+
+#timeline-message-1 {
+    top: 10px;
+}
+
+#timeline-message-2 {
+    top: 200px;
+}
+
+#timeline-message-3 {
+    top: 400px;
+}
+
+#timeline-message-4 {
+    top: 600px;
+}
+
+#timeline-message-5 {
+    top: 800px;
+}
+
+#timeline-message-6 {
+    top: 1000px;
+}
+
 @tailwind utilities;
 

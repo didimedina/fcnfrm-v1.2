@@ -10,6 +10,7 @@
   "dependencies": {
     "animejs": "^3.0.1",
     "autoprefixer": "^9.5.0",
+    "rxjs": "^6.4.0",
     "tailwindcss": "^0.7.4"
   }
 }
