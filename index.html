@@ -4,17 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>FCN+FRM Collective</title>
-
     <link rel="stylesheet" href="./src/index.css">
   </head>
-  <body class="font-sans">
-    <div class="min-h-1vh flex flex-col items-center justify-center">
+  <body class="font-sans antialiased leading-tight">
+    <section class="HERO min-h-1vh flex flex-col items-center justify-center">
       <img class="w-32" src="./assets/images/logo.png" alt="logo">
       <h1 class="font-serif text-6xl text-center m-40">Product Teams are simple, <br> until they’re not.</h1>
       <div class="border-2 border-grey-light rounded-full h-10 w-6">
         <div class="anim-dot mx-auto mt-2 bg-grey-light rounded-full h-1 w-1"></div>
       </div>
-    </div>
+    </section>
     <div id="timeline-container" class="anim-container anim-event-timeline h-3vh min-h-3vh bg-grey-lightest flex relative">
       <div class="timeline"></div>
       <div id="timeline-message-1" class="timeline-message bg-grey-lightest">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
@@ -24,31 +23,118 @@
       <div id="timeline-message-5" class="timeline-message bg-grey-lightest">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
       <div id="timeline-message-6" class="timeline-message bg-grey-lightest">Quis nostrud exercitation ullamco.</div>
     </div>
-    <div class="container mx-auto flex flex-col">
+
+    <!-- <div class="container mx-auto flex flex-col">
+    <section class="TIMELINE anim-event-timeline min-h-3vh bg-grey-lightest"></section> -->
+
+    <section class="SERVICES container mx-auto flex flex-col">
       <h2 class="font-serif text-center mx-auto my-40 text-5xl lg:w-4/5">We believe well coordinated Product Teams with the right tools build successful businesses.</h2>
-      <div class="shadow-xl h-4/5vh relative flex items-center overflow-hidden">
-        <div class="bg-cover bg-center h-full w-full absolute z-10" style="background-image: url('./assets/images/workspace.jpg')"></div>
-        <iframe class="w-full h-full z-0 absolute" width="560" height="315"
+      <div class="anim-promo-video-container shadow-xl h-4/5vh relative flex items-center overflow-hidden">
+        <div class="anim-promo-video-cta bg-cover bg-center h-full w-full absolute z-10" style="background-image: url('./assets/images/workspace.jpg')"></div>
+        <iframe class="anim-promo-video w-full h-full z-0 absolute" width="560" height="315"
           src="https://www.youtube.com/embed/SJxLNcw3fnI?&controls=1" frameborder="0"
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="flex my-24">
         <div class="w-1/3 mx-10">
           <h4 class="text-2xl mb-3 font-normal">Leadership</h4>
-          <p class="text-lg leading-tight text-grey-dark">We help Product Teams harness a culture of communal ownership and develop a process that helps them retain their flow.</p>
+          <p class="text-lg text-grey-dark">We help Product Teams harness a culture of communal ownership and develop a process that helps them retain their flow.</p>
         </div>
         <div class="w-1/3 mx-10">
           <h4 class="text-2xl mb-3 font-normal">Staffing</h4>
-          <p class="text-lg leading-tight text-grey-dark">We help Product Teams recruit and qualify the right talent. Being Product Designers and Managers ourselves people trust
+          <p class="text-lg text-grey-dark">We help Product Teams recruit and qualify the right talent. Being Product Designers and Managers ourselves people trust
           us when recommending a new place to work.</p>
         </div>
         <div class="w-1/3 mx-10">
           <h4 class="text-2xl mb-3 font-normal">Design Systems</h4>
-          <p class="text-lg leading-tight text-grey-dark">We help Product Teams create internal tools that help them free up time to work on things that are more important to the
+          <p class="text-lg text-grey-dark">We help Product Teams create internal tools that help them free up time to work on things that are more important to the
           business.</p>
         </div>
       </div>
-    </div>
+    </section>
+    <section class="TESTIMONIALS container px-32 mx-auto flex flex-col items-center">
+      <h2 class="font-serif text-center mx-auto mt-40 mb-24 text-5xl lg:w-4/5">Great work,
+      <br> lasting relationships.</h2>
+      <div class="flex-col">
+        <div class="flex w-full mb-16">
+          <div class="w-1/5">
+            <p class="text-lg mb-2">Aryk Grosz</p>
+            <p class="text-md text-grey-dark">CTO at Mixbook</p>
+          </div>
+          <p class="w-4/5 text-2xl">Didi is a machine. He's not just a talented designer dedicated to his craft, but effective at understanding business
+          needs and finding optimal solutions.</p>
+        </div>
+        <div class="flex w-full mb-16">
+          <div class="w-1/5">
+            <p class="text-lg mb-2">Maelle Gavet</p>
+            <p class="text-md text-grey-dark">COO at Compass</p>
+          </div>
+          <p class="text-2xl w-4/5">Didi's ability to deeply understand complex problems and unravel them to their core is a
+            trait I see in very few leaders.</p>
+        </div>
+        <div class="flex w-full">
+          <div class="w-1/5">
+            <p class="text-lg mb-2">Gary Levitt</p>
+            <p class="text-md text-grey-dark">CTO at Mixbook</p>
+          </div>
+          <p class="text-2xl w-4/5">Clever and confident, Didi is a superb product and market-fit consultant. He provides
+            consistent and actionable strategy and delivers on execution too.</p>
+        </div>
+      </div>
+      <div class="LOGOS flex flex-wrap content-center justify-center mt-24">
+        <img class="m-6" src="./assets/images/montage.svg" alt="logo">
+        <img class="m-6" src="./assets/images/inVision.svg" alt="logo">
+        <img class="m-6" src="./assets/images/digit.svg" alt="logo">
+        <img class="m-6" src="./assets/images/compass.svg" alt="logo">
+      </div>
+    </section>
+    <section class="TEAM container mx-auto flex my-40">
+      <div class="TEAM__MEMBER px-6 w-1/3 flex flex-col items-center">
+        <img class="m-6" src="./assets/images/didi.jpg" alt="logo">
+        <p class="text-lg mb-2">Didi Medina</p>
+        <p class="text-md text-grey-dark">Product Leader</p>
+      </div>
+      <div class="TEAM__MEMBER px-6 w-1/3 flex flex-col items-center">
+        <img class="m-6" src="./assets/images/hannah.jpg" alt="logo">
+        <p class="text-lg mb-2">Gal Shir</p>
+        <p class="text-md text-grey-dark">Product Marketing Leader</p>
+      </div>
+      <div class="TEAM__MEMBER px-6 w-1/3 flex flex-col items-center">
+        <img class="m-6" src="./assets/images/esi.jpg" alt="logo">
+        <p class="text-lg mb-2">Yonatan Naor</p>
+        <p class="text-md text-grey-dark">Product Engineering Leader</p>
+      </div>
+    </section>
+    <section class="FOOTER bg-grey-lightest py-32">
+      <div class="container px-32 flex mx-auto pb-24">
+        <div class="w-3/5 pr-10">
+          <h2 class="text-5xl font-serif">Want help with harnessing an a-list product team?</h2>
+          <div class="flex flex-no-wrap mt-10 items-center">
+            <button class="btn btn-black min-w-48 mr-6">Hire Us!</button>
+            <p class="text-md text-grey-dark">All services are offered either hands-on, coaching, or independent workshops. </p>
+          </div>
+        </div>
+        <div class="w-2/5 pl-10">
+          <div class="mb-16">
+            <h4 class="text-2xl font-normal mb-4">Invite us to host a workshop or speak at your next event.</h4>
+            <button class="text-xl py-1 border-b-2 border-black">Get in touch</button>
+          </div>
+          <div>
+            <h4 class="text-2xl font-normal mb-4">Learn more about our methodologies and processes.</h4>
+            <button class="text-xl py-1 border-b-2 border-black">Read our Playbook</button>
+          </div>
+        </div>
+      </div>
+      <div class="mx-auto mb-10 w-12 h-2 border-t border-b border-grey-light"></div>
+      <div class="TRANSLATION w-1/3 flex mx-auto">
+        <div class="flex-no-shrink pr-10">
+          <p class="text-md mb-2">FCN + FRM</p>
+          <p class="text-sm text-grey-dark">ˈfəNG(k)SH(ə)n and fôrm</p>
+        </div>
+        <p class="text-md w-2/3">More than the balance between usability and beauty, we’re passionate about how teams function
+          together to bring form to their ideas. </p>
+      </div>
+    </section>
     <script src="./src/index.js" charset="utf-8"></script>
   </body>
 </html>

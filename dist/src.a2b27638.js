@@ -16859,6 +16859,18 @@ var _loop = function _loop() {
 for (var _i = 0; _i < timelineMessages.length; _i++) {
   _loop();
 }
+
+var promoVideoCTA = document.querySelector('.anim-promo-video-cta');
+promoVideoCTA.addEventListener('click', function () {
+  promoVideoCTA.style.visibility = "hidden";
+  document.querySelector('.anim-promo-video').src = 'https://www.youtube.com/embed/3s3UeXjzO74?autoplay=1&controls=1';
+  (0, _animejs.default)({
+    targets: '.anim-promo-video-container',
+    scale: [1, 1.05],
+    easing: 'spring(1, 80, 10, 0)',
+    duration: 500
+  });
+});
 },{"animejs":"node_modules/animejs/lib/anime.es.js","rxjs":"node_modules/rxjs/_esm5/index.js","rxjs/operators":"node_modules/rxjs/_esm5/operators/index.js"}],"../../../../.nvm/versions/node/v11.2.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -16886,7 +16898,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58345" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58982" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
