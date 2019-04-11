@@ -30,7 +30,7 @@
 }
 
 .timeline {
-    height: 100%;
+    height: 0;
     border-right: 5px solid gray;
     flex: 0 0 50%;
     content: '';

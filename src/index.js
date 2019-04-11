@@ -13,6 +13,7 @@ anime({
 
 const timelineContainer = document.getElementById('timeline-container');
 const timelineOffset = timelineContainer.offsetTop;
+const timelineHeight = timelineContainer.offsetHeight;
 const appearOffset = 100;
 const disappearOffset = 150;
 
@@ -31,6 +32,20 @@ const source = fromEvent(document, 'scroll').pipe(
     pairwise(),
     startWith([window.scrollY, window.scrollY])
 );
+
+const timelineAnimation = anime({
+    easing: 'linear',
+    targets: '.timeline',
+    height: [0, '100%'],
+    autoplay: false
+});
+
+source.subscribe(([y1, y2]) => {
+    const seekOffset = Math.min(Math.max(( y2 - appearOffset ) / timelineHeight, 0), 1);
+    console.log(`Seek: ${timelineAnimation.duration * seekOffset} [${timelineAnimation.duration}, ${y2}, ${window.innerHeight}, ${timelineHeight}]`);
+    timelineAnimation.seek( timelineAnimation.duration * seekOffset );
+});
+
 for (const message of timelineMessages) {
     // For each message:
     // - calculate the threshold
@@ -42,7 +57,7 @@ for (const message of timelineMessages) {
     message.threshold = timelineOffset - window.innerHeight + messageElement.offsetTop + appearOffset;
     message.animation = anime({
         targets: `#${message.id}`,
-        left: [-1 * window.innerWidth / 2, window.innerWidth / 2],
+        left: ['-50%', '50%'],
         duration: 500,
         autoplay: false,
         easing: 'cubicBezier(.5, .05, .1, .3)'

@@ -16789,6 +16789,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 });
 var timelineContainer = document.getElementById('timeline-container');
 var timelineOffset = timelineContainer.offsetTop;
+var timelineHeight = timelineContainer.offsetHeight;
 var appearOffset = 100;
 var disappearOffset = 150;
 var timelineMessages = [{
@@ -16808,9 +16809,24 @@ var timelineMessages = [{
 var source = (0, _rxjs.fromEvent)(document, 'scroll').pipe((0, _operators.map)(function (_) {
   return window.scrollY;
 }), (0, _operators.pairwise)(), (0, _operators.startWith)([window.scrollY, window.scrollY]));
+var timelineAnimation = (0, _animejs.default)({
+  easing: 'linear',
+  targets: '.timeline',
+  height: [0, '100%'],
+  autoplay: false
+});
+source.subscribe(function (_ref) {
+  var _ref2 = _slicedToArray(_ref, 2),
+      y1 = _ref2[0],
+      y2 = _ref2[1];
+
+  var seekOffset = Math.min(Math.max((y2 - appearOffset) / timelineHeight, 0), 1);
+  console.log("Seek: ".concat(timelineAnimation.duration * seekOffset, " [").concat(timelineAnimation.duration, ", ").concat(y2, ", ").concat(window.innerHeight, ", ").concat(timelineHeight, "]"));
+  timelineAnimation.seek(timelineAnimation.duration * seekOffset);
+});
 
 var _loop = function _loop() {
-  var message = _timelineMessages[_i];
+  var message = _timelineMessages[_i2];
   // For each message:
   // - calculate the threshold
   // - initialize the animation
@@ -16820,22 +16836,22 @@ var _loop = function _loop() {
   message.threshold = timelineOffset - window.innerHeight + messageElement.offsetTop + appearOffset;
   message.animation = (0, _animejs.default)({
     targets: "#".concat(message.id),
-    left: [-1 * window.innerWidth / 2, window.innerWidth / 2],
+    left: ['-50%', '50%'],
     duration: 500,
     autoplay: false,
     easing: 'cubicBezier(.5, .05, .1, .3)'
   }); // Observalbe that only fires when the message should appear
 
-  source.pipe((0, _operators.filter)(function (_ref) {
-    var _ref2 = _slicedToArray(_ref, 2),
-        y1 = _ref2[0],
-        y2 = _ref2[1];
-
-    return y2 >= y1;
-  }), (0, _operators.map)(function (_ref3) {
+  source.pipe((0, _operators.filter)(function (_ref3) {
     var _ref4 = _slicedToArray(_ref3, 2),
         y1 = _ref4[0],
         y2 = _ref4[1];
+
+    return y2 >= y1;
+  }), (0, _operators.map)(function (_ref5) {
+    var _ref6 = _slicedToArray(_ref5, 2),
+        y1 = _ref6[0],
+        y2 = _ref6[1];
 
     console.log("".concat(y1, ", ").concat(y2, ", ").concat(message.animation.progress));
     return y2 > message.threshold && message.animation.progress === 0;
@@ -16847,16 +16863,16 @@ var _loop = function _loop() {
     message.animation.play();
   }); // Observalbe that only fires when the message should disappear
 
-  source.pipe((0, _operators.filter)(function (_ref5) {
-    var _ref6 = _slicedToArray(_ref5, 2),
-        y1 = _ref6[0],
-        y2 = _ref6[1];
-
-    return y2 <= y1;
-  }), (0, _operators.map)(function (_ref7) {
+  source.pipe((0, _operators.filter)(function (_ref7) {
     var _ref8 = _slicedToArray(_ref7, 2),
         y1 = _ref8[0],
         y2 = _ref8[1];
+
+    return y2 <= y1;
+  }), (0, _operators.map)(function (_ref9) {
+    var _ref10 = _slicedToArray(_ref9, 2),
+        y1 = _ref10[0],
+        y2 = _ref10[1];
 
     console.log("".concat(y1, ", ").concat(y2, ", ").concat(message.animation.progress, ", ").concat(message.threshold));
     return y2 < message.threshold + disappearOffset && message.animation.progress > 0;
@@ -16869,7 +16885,7 @@ var _loop = function _loop() {
   });
 };
 
-for (var _i = 0, _timelineMessages = timelineMessages; _i < _timelineMessages.length; _i++) {
+for (var _i2 = 0, _timelineMessages = timelineMessages; _i2 < _timelineMessages.length; _i2++) {
   _loop();
 }
 },{"animejs":"node_modules/animejs/lib/anime.es.js","rxjs":"node_modules/rxjs/_esm5/index.js","rxjs/operators":"node_modules/rxjs/_esm5/operators/index.js"}],"../../.nvm/versions/node/v10.0.0/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -16900,7 +16916,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51783" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49463" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
