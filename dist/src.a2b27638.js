@@ -16888,6 +16888,18 @@ var _loop = function _loop() {
 for (var _i2 = 0, _timelineMessages = timelineMessages; _i2 < _timelineMessages.length; _i2++) {
   _loop();
 }
+
+var promoVideoCTA = document.querySelector('.anim-promo-video-cta');
+promoVideoCTA.addEventListener('click', function () {
+  promoVideoCTA.style.visibility = "hidden";
+  document.querySelector('.anim-promo-video').src = 'https://www.youtube.com/embed/3s3UeXjzO74?autoplay=1&controls=1';
+  (0, _animejs.default)({
+    targets: '.anim-promo-video-container',
+    scale: [1, 1.05],
+    easing: 'spring(1, 80, 10, 0)',
+    duration: 500
+  });
+});
 },{"animejs":"node_modules/animejs/lib/anime.es.js","rxjs":"node_modules/rxjs/_esm5/index.js","rxjs/operators":"node_modules/rxjs/_esm5/operators/index.js"}],"../../.nvm/versions/node/v10.0.0/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

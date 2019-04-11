@@ -92,4 +92,19 @@ for (const message of timelineMessages) {
 
 
 
+let promoVideoCTA = document.querySelector('.anim-promo-video-cta');
+
+promoVideoCTA.addEventListener('click', function () {
+
+    promoVideoCTA.style.visibility = "hidden";
+    document.querySelector('.anim-promo-video').src = 'https://www.youtube.com/embed/3s3UeXjzO74?autoplay=1&controls=1';
+
+    anime({
+        targets: '.anim-promo-video-container',
+        scale: [1, 1.05],
+        easing: 'spring(1, 80, 10, 0)',
+        duration: 500
+    })
+})
+
 
