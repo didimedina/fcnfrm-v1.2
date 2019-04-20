@@ -9,13 +9,29 @@
   <body class="font-sans antialiased leading-tight">
     <section class="HERO min-h-1vh flex flex-col items-center justify-center">
       <img class="w-32" src="/logo.3f4a1874.png" alt="logo">
-      <h1 class="font-serif text-6xl text-center m-40">Product Teams are simple, <br> until they’re not.</h1>
+      <h1 class="font-serif text-6xl text-center m-40">Product Teams are simple, until they’re not.</h1>
       <div class="border-2 border-grey-light rounded-full h-10 w-6">
         <div class="anim-dot mx-auto mt-2 bg-grey-light rounded-full h-1 w-1"></div>
       </div>
     </section>
-    <div id="timeline-container" class="anim-container anim-event-timeline h-3vh min-h-3vh bg-grey-lightest flex relative">
-      <div class="timeline"></div>
+    <section class="TIMELINE bg-black h-3vh min-h-3vh flex relative text-white">
+      <div class="TIMELINE-CONTAINER container mx-auto flex flex-col justify-center w-1vw h-1vh flex">
+        <div class="flex flex-col relative">
+          <div class="TIMELINE__EVENTS z-10 pl-6">
+            <div class="TIMELINE__MESSAGE ml-6 mb-8 text-3xl">You pick a problem worth solving.</div>
+            <div class="TIMELINE__POINTER  float-left flex flex-col self-start items-center">
+              <div class="bg-grey-darker w-px h-24 mb-2"></div>
+              <div class="border border-grey-darker rounded-full bg-black h-16 w-16">
+                <img class="w-32" src="/emoji.1c8d6064.png" alt="logo">
+              </div>
+            </div>
+          </div>
+          <div class="TIMELINE__TRACK absalute z-0 pin-b -mt-8 border-b-4 border-dotted border-grey-darker"></div>
+        </div>
+      </div>
+    </section>
+    <div id="timeline-container" class="border-2 anim-container anim-event-timeline h-3vh min-h-3vh bg-grey-lightest flex relative">
+      <div class="timeline bg-black"></div>
       <div id="timeline-message-1" class="timeline-message bg-grey-lightest">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
       <div id="timeline-message-2" class="timeline-message bg-grey-lightest">Quis nostrud exercitation ullamco.</div>
       <div id="timeline-message-3" class="timeline-message bg-grey-lightest">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
@@ -30,7 +46,7 @@
     <section class="SERVICES container mx-auto flex flex-col">
       <h2 class="font-serif text-center mx-auto my-40 text-5xl lg:w-4/5">We believe well coordinated Product Teams with the right tools build successful businesses.</h2>
       <div class="anim-promo-video-container shadow-xl h-4/5vh relative flex items-center overflow-hidden">
-        <div class="anim-promo-video-cta bg-cover bg-center h-full w-full absolute z-10" style="background-image:url(/workspace.9bc9e997.jpg)"></div>
+        <div class="anim-promo-video-cta bg-cover bg-center h-full w-full absolute z-10" style="background-image:url(workspace.9bc9e997.jpg)"></div>
         <iframe class="anim-promo-video w-full h-full z-0 absolute" width="560" height="315" src="https://www.youtube.com/embed/SJxLNcw3fnI?&controls=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
       </div>
       <div class="flex my-24">
@@ -86,21 +102,31 @@
         <img class="m-6" src="/compass.4fac427c.svg" alt="logo">
       </div>
     </section>
-    <section class="TEAM container mx-auto flex my-40">
-      <div class="TEAM__MEMBER px-6 w-1/3 flex flex-col items-center">
+    <section class="TEAM container mx-auto flex-wrap justify-center flex my-40">
+      <div class="TEAM__MEMBER p-6 w-1/3 flex flex-col items-center">
         <img class="m-6" src="/didi.bbc8a293.jpg" alt="logo">
         <p class="text-lg mb-2">Didi Medina</p>
-        <p class="text-md text-grey-dark">Product Leader</p>
+        <p class="text-md text-grey-dark">Product Design Leader</p>
       </div>
-      <div class="TEAM__MEMBER px-6 w-1/3 flex flex-col items-center">
-        <img class="m-6" src="/hannah.c3a3ed76.jpg" alt="logo">
-        <p class="text-lg mb-2">Gal Shir</p>
-        <p class="text-md text-grey-dark">Product Marketing Leader</p>
-      </div>
-      <div class="TEAM__MEMBER px-6 w-1/3 flex flex-col items-center">
+      <div class="TEAM__MEMBER p-6 w-1/3 flex flex-col items-center">
         <img class="m-6" src="/esi.49ad600d.jpg" alt="logo">
         <p class="text-lg mb-2">Yonatan Naor</p>
         <p class="text-md text-grey-dark">Product Engineering Leader</p>
+      </div>
+      <div class="TEAM__MEMBER p-6 w-1/3 flex flex-col items-center">
+        <img class="m-6" src="/hannah.c3a3ed76.jpg" alt="logo">
+        <p class="text-lg mb-2">Gal Shir</p>
+        <p class="text-md text-grey-dark">Marketing Design Leader</p>
+      </div>
+      <div class="TEAM__MEMBER p-6 w-1/3 flex flex-col items-center">
+        <img class="m-6" src="/esi.49ad600d.jpg" alt="logo">
+        <p class="text-lg mb-2">Azriel Ratz</p>
+        <p class="text-md text-grey-dark">PPC Marketing Leader</p>
+      </div>
+      <div class="TEAM__MEMBER p-6 w-1/3 flex flex-col items-center">
+        <img class="m-6" src="/esi.49ad600d.jpg" alt="logo">
+        <p class="text-lg mb-2">Nir Gottlieb</p>
+        <p class="text-md text-grey-dark">Recruitor</p>
       </div>
     </section>
     <section class="FOOTER bg-grey-lightest py-32">

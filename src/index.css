@@ -30,12 +30,13 @@
 }
 
 .timeline {
-    height: 0;
-    border-right: 5px solid gray;
-    flex: 0 0 50%;
-    content: '';
-    align-items: stretch;
-    direction: ltr;
+    height: 3px;
+    width: 0;
+    /* flex: 0 0 50%; */
+    /* content: ''; */
+    /* align-items: stretch;
+    flex-direction: column; */
+    /* direction: ltr; */
 }
 
 .timeline-message {

@@ -36,7 +36,7 @@ const source = fromEvent(document, 'scroll').pipe(
 const timelineAnimation = anime({
     easing: 'linear',
     targets: '.timeline',
-    height: [0, '100%'],
+    width: ['0%', '100%'],
     autoplay: false
 });
 
