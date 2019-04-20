@@ -16810,71 +16810,46 @@ source.subscribe(function (_ref) {
   var seekOffset = Math.min(Math.max((y2 - appearOffset) / timelineHeight, 0), 1);
   console.log("Seek: ".concat(timelineAnimation.duration * seekOffset, " [").concat(timelineAnimation.duration, ", ").concat(y2, ", ").concat(window.innerHeight, ", ").concat(timelineHeight, "]"));
   timelineAnimation.seek(timelineAnimation.duration * seekOffset);
-});
-
-var _loop = function _loop() {
-  var message = timelineMessages[_i2];
-  // For each message:
-  // - calculate the threshold
-  // - initialize the animation
-  // - set the observables for appear and disappear
-  var messageElement = document.getElementById(message.id); // Add appearOffset so that the element is entirely visible when starting to animate
-
-  message.threshold = timelineOffset - window.innerHeight + messageElement.offsetTop + appearOffset;
-  message.animation = (0, _animejs.default)({
-    targets: "#".concat(message.id),
-    left: ['-50%', '50%'],
-    duration: 500,
-    autoplay: false,
-    easing: 'cubicBezier(.5, .05, .1, .3)'
-  }); // Observalbe that only fires when the message should appear
-
-  source.pipe((0, _operators.filter)(function (_ref3) {
-    var _ref4 = _slicedToArray(_ref3, 2),
-        y1 = _ref4[0],
-        y2 = _ref4[1];
-
-    return y2 >= y1;
-  }), (0, _operators.map)(function (_ref5) {
-    var _ref6 = _slicedToArray(_ref5, 2),
-        y1 = _ref6[0],
-        y2 = _ref6[1];
-
-    console.log("".concat(y1, ", ").concat(y2, ", ").concat(message.animation.progress));
-    return y2 > message.threshold && message.animation.progress === 0;
-  }), (0, _operators.filter)(function (shouldStart) {
-    return shouldStart;
-  })).subscribe(function (shouldStartAnimation) {
-    console.log("Start ".concat(shouldStartAnimation));
-    message.animation.direction = 'normal';
-    message.animation.play();
-  }); // Observalbe that only fires when the message should disappear
-
-  source.pipe((0, _operators.filter)(function (_ref7) {
-    var _ref8 = _slicedToArray(_ref7, 2),
-        y1 = _ref8[0],
-        y2 = _ref8[1];
-
-    return y2 <= y1;
-  }), (0, _operators.map)(function (_ref9) {
-    var _ref10 = _slicedToArray(_ref9, 2),
-        y1 = _ref10[0],
-        y2 = _ref10[1];
-
-    console.log("".concat(y1, ", ").concat(y2, ", ").concat(message.animation.progress, ", ").concat(message.threshold));
-    return y2 < message.threshold + disappearOffset && message.animation.progress > 0;
-  }), (0, _operators.filter)(function (shouldStart) {
-    return shouldStart;
-  })).subscribe(function (shouldStartAnimation) {
-    console.log("Reverse: ".concat(shouldStartAnimation));
-    message.animation.direction = 'reverse';
-    message.animation.play();
-  });
-};
-
-for (var _i2 = 0; _i2 < timelineMessages.length; _i2++) {
-  _loop();
-}
+}); // for (const message of timelineMessages) {
+//     // For each message:
+//     // - calculate the threshold
+//     // - initialize the animation
+//     // - set the observables for appear and disappear
+//     const messageElement = document.getElementById(message.id);
+//     // Add appearOffset so that the element is entirely visible when starting to animate
+//     message.threshold = timelineOffset - window.innerHeight + messageElement.offsetTop + appearOffset;
+//     message.animation = anime({
+//         targets: `#${message.id}`,
+//         left: ['-50%', '50%'],
+//         duration: 500,
+//         autoplay: false,
+//         easing: 'cubicBezier(.5, .05, .1, .3)'
+//     });
+//     // Observalbe that only fires when the message should appear
+//     source.pipe(
+//         filter(([y1, y2]) => y2 >= y1),
+//         map(([y1, y2]) => {
+//             console.log(`${y1}, ${y2}, ${message.animation.progress}`);
+//             return y2 > message.threshold && message.animation.progress === 0; }),
+//         filter(shouldStart => shouldStart)
+//     ).subscribe(shouldStartAnimation => {
+//         console.log(`Start ${shouldStartAnimation}`);
+//         message.animation.direction = 'normal';
+//         message.animation.play();
+//     });
+//     // Observalbe that only fires when the message should disappear
+//     source.pipe(
+//         filter(([y1, y2]) => y2 <= y1),
+//         map(([y1, y2]) => {
+//             console.log(`${y1}, ${y2}, ${message.animation.progress}, ${message.threshold}`);
+//             return y2 < (message.threshold + disappearOffset) && message.animation.progress > 0;}),
+//         filter(shouldStart => shouldStart)
+//     ).subscribe(shouldStartAnimation => {
+//         console.log(`Reverse: ${shouldStartAnimation}`);
+//         message.animation.direction = 'reverse';
+//         message.animation.play();
+//     });
+// }
 
 var promoVideoCTA = document.querySelector('.anim-promo-video-cta');
 promoVideoCTA.addEventListener('click', function () {

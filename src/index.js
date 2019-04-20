@@ -46,48 +46,48 @@ source.subscribe(([y1, y2]) => {
     timelineAnimation.seek( timelineAnimation.duration * seekOffset );
 });
 
-for (const message of timelineMessages) {
-    // For each message:
-    // - calculate the threshold
-    // - initialize the animation
-    // - set the observables for appear and disappear
+// for (const message of timelineMessages) {
+//     // For each message:
+//     // - calculate the threshold
+//     // - initialize the animation
+//     // - set the observables for appear and disappear
     
-    const messageElement = document.getElementById(message.id);
-    // Add appearOffset so that the element is entirely visible when starting to animate
-    message.threshold = timelineOffset - window.innerHeight + messageElement.offsetTop + appearOffset;
-    message.animation = anime({
-        targets: `#${message.id}`,
-        left: ['-50%', '50%'],
-        duration: 500,
-        autoplay: false,
-        easing: 'cubicBezier(.5, .05, .1, .3)'
-    });
+//     const messageElement = document.getElementById(message.id);
+//     // Add appearOffset so that the element is entirely visible when starting to animate
+//     message.threshold = timelineOffset - window.innerHeight + messageElement.offsetTop + appearOffset;
+//     message.animation = anime({
+//         targets: `#${message.id}`,
+//         left: ['-50%', '50%'],
+//         duration: 500,
+//         autoplay: false,
+//         easing: 'cubicBezier(.5, .05, .1, .3)'
+//     });
 
-    // Observalbe that only fires when the message should appear
-    source.pipe(
-        filter(([y1, y2]) => y2 >= y1),
-        map(([y1, y2]) => {
-            console.log(`${y1}, ${y2}, ${message.animation.progress}`);
-            return y2 > message.threshold && message.animation.progress === 0; }),
-        filter(shouldStart => shouldStart)
-    ).subscribe(shouldStartAnimation => {
-        console.log(`Start ${shouldStartAnimation}`);
-        message.animation.direction = 'normal';
-        message.animation.play();
-    });
-    // Observalbe that only fires when the message should disappear
-    source.pipe(
-        filter(([y1, y2]) => y2 <= y1),
-        map(([y1, y2]) => {
-            console.log(`${y1}, ${y2}, ${message.animation.progress}, ${message.threshold}`);
-            return y2 < (message.threshold + disappearOffset) && message.animation.progress > 0;}),
-        filter(shouldStart => shouldStart)
-    ).subscribe(shouldStartAnimation => {
-        console.log(`Reverse: ${shouldStartAnimation}`);
-        message.animation.direction = 'reverse';
-        message.animation.play();
-    });
-}
+//     // Observalbe that only fires when the message should appear
+//     source.pipe(
+//         filter(([y1, y2]) => y2 >= y1),
+//         map(([y1, y2]) => {
+//             console.log(`${y1}, ${y2}, ${message.animation.progress}`);
+//             return y2 > message.threshold && message.animation.progress === 0; }),
+//         filter(shouldStart => shouldStart)
+//     ).subscribe(shouldStartAnimation => {
+//         console.log(`Start ${shouldStartAnimation}`);
+//         message.animation.direction = 'normal';
+//         message.animation.play();
+//     });
+//     // Observalbe that only fires when the message should disappear
+//     source.pipe(
+//         filter(([y1, y2]) => y2 <= y1),
+//         map(([y1, y2]) => {
+//             console.log(`${y1}, ${y2}, ${message.animation.progress}, ${message.threshold}`);
+//             return y2 < (message.threshold + disappearOffset) && message.animation.progress > 0;}),
+//         filter(shouldStart => shouldStart)
+//     ).subscribe(shouldStartAnimation => {
+//         console.log(`Reverse: ${shouldStartAnimation}`);
+//         message.animation.direction = 'reverse';
+//         message.animation.play();
+//     });
+// }
 
 
 
