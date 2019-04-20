@@ -16773,33 +16773,33 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   opacity: [1, 0],
   easing: 'easeOutQuad',
   duration: 1200
-});
-var timelineContainer = document.getElementById('timeline-container');
-var timelineOffset = timelineContainer.offsetTop;
-var timelineHeight = timelineContainer.offsetHeight;
-var appearOffset = 100;
-var disappearOffset = 150;
-var timelineMessages = [{
-  id: 'timeline-message-1'
-}, {
-  id: 'timeline-message-2'
-}, {
-  id: 'timeline-message-3'
-}, {
-  id: 'timeline-message-4'
-}, {
-  id: 'timeline-message-5'
-}, {
-  id: 'timeline-message-6'
-}]; // Setup a pairwise scorll source
+}); // const timelineContainer = document.getElementById('timeline-container');
+// const timelineOffset = timelineContainer.offsetTop;
+// const timelineHeight = timelineContainer.offsetHeight;
+// const appearOffset = 100;
+// const disappearOffset = 150;
+// const timelineMessages = [
+//     { id: 'timeline-message-1'},
+//     { id: 'timeline-message-2'},
+//     { id: 'timeline-message-3'},
+//     { id: 'timeline-message-4'},
+//     { id: 'timeline-message-5'},
+//     { id: 'timeline-message-6'}
+// ];
+// Setup a pairwise scorll source
 
 var source = (0, _rxjs.fromEvent)(document, 'scroll').pipe((0, _operators.map)(function (_) {
   return window.scrollY;
 }), (0, _operators.pairwise)(), (0, _operators.startWith)([window.scrollY, window.scrollY]));
+var appearOffset = 1000;
+var timelineContainer = document.querySelector('.TIMELINE');
+var timelineHeight = timelineContainer.offsetHeight;
 var timelineAnimation = (0, _animejs.default)({
   easing: 'linear',
-  targets: '.timeline',
-  width: ['0%', '100%'],
+  targets: '.TIMELINE__EVENTS',
+  // Works when I set it to translateX with absalute positioning but not percentages against left.
+  translateX: ['0%', '50%'],
+  // left: ['0%', '100%'],
   autoplay: false
 });
 source.subscribe(function (_ref) {
@@ -16810,7 +16810,18 @@ source.subscribe(function (_ref) {
   var seekOffset = Math.min(Math.max((y2 - appearOffset) / timelineHeight, 0), 1);
   console.log("Seek: ".concat(timelineAnimation.duration * seekOffset, " [").concat(timelineAnimation.duration, ", ").concat(y2, ", ").concat(window.innerHeight, ", ").concat(timelineHeight, "]"));
   timelineAnimation.seek(timelineAnimation.duration * seekOffset);
-}); // for (const message of timelineMessages) {
+}); // const timelineAnimation = anime({
+//     easing: 'linear',
+//     targets: '.timeline',
+//     width: ['0%', '100%'],
+//     autoplay: false
+// });
+// source.subscribe(([y1, y2]) => {
+//     const seekOffset = Math.min(Math.max(( y2 - appearOffset ) / timelineHeight, 0), 1);
+//     console.log(`Seek: ${timelineAnimation.duration * seekOffset} [${timelineAnimation.duration}, ${y2}, ${window.innerHeight}, ${timelineHeight}]`);
+//     timelineAnimation.seek( timelineAnimation.duration * seekOffset );
+// });
+// for (const message of timelineMessages) {
 //     // For each message:
 //     // - calculate the threshold
 //     // - initialize the animation
