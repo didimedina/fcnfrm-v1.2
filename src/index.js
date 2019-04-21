@@ -2,6 +2,10 @@ import anime from 'animejs';
 import { fromEvent } from 'rxjs';
 import { pairwise, map, filter, distinctUntilChanged, startWith } from 'rxjs/operators';
 
+function print(el) {
+    console.log(el);
+};
+
 anime({
     targets: '.anim-dot',
     translateY: [0, 24],
@@ -33,7 +37,7 @@ const source = fromEvent(document, 'scroll').pipe(
     startWith([window.scrollY, window.scrollY])
 );
 
-const appearOffset = 100;
+const appearOffset = window.innerHeight;
 const timeline = document.querySelector('.TIMELINE');
 const timelineContainer = document.querySelector('.TIMELINE-CONTAINER');
 const timelineHeight = timeline.offsetHeight;
@@ -44,18 +48,26 @@ const timelineAnimation = anime({
     // Works when I set it to translateX with absalute positioning but not percentages against left.
     // translateX: ['0%', '50%'],
     // left: ['0%', '100%'],
-    'margin-left': ['0%', '50%'],
+    'margin-left': ['0%', '80%'],
     autoplay: false
 });
 
 source.subscribe(([y1, y2]) => {
     const seekOffset = Math.min(Math.max((y2 - appearOffset) / timelineHeight, 0), 1);
-    if (y2 > window.innerHeight) { 
+    // print(`Y1: ${y1} Y2: ${y2} Window: ${window.innerHeight} Container: ${timelineHeight}`);
+    if (y2 > window.innerHeight && y2 < timelineHeight) {
+        print('Fixed top');
         timelineContainer.classList.add('fixed');
-    } else {
+    } 
+    else if (y2 > timelineHeight) {
+        print('Absolute bottom');
         timelineContainer.classList.remove('fixed');
-    }
-    console.log(`Seek: ${timelineAnimation.duration * seekOffset} [${timelineAnimation.duration}, ${y2}, ${window.innerHeight}, ${timelineHeight}]`);
+        timelineContainer.classList.add('absolute', 'pin-b');
+    }  
+    // else {
+    //     timelineContainer.classList.remove('fixed');
+    // }
+    // // console.log(`Seek: ${timelineAnimation.duration * seekOffset} [${timelineAnimation.duration}, ${y2}, ${window.innerHeight}, ${timelineHeight}]`);
     timelineAnimation.seek(timelineAnimation.duration * seekOffset);
 });
 

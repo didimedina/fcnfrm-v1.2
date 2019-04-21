@@ -5,6 +5,8 @@
 //
 // anything defined in a previous bundle is accessed via the
 // orig method which is the require for previous bundles
+
+// eslint-disable-next-line no-global-assign
 parcelRequire = (function (modules, cache, entry, globalName) {
   // Save the require from previous bundle to this closure if any
   var previousRequire = typeof parcelRequire === 'function' && parcelRequire;
@@ -75,16 +77,8 @@ parcelRequire = (function (modules, cache, entry, globalName) {
     }, {}];
   };
 
-  var error;
   for (var i = 0; i < entry.length; i++) {
-    try {
-      newRequire(entry[i]);
-    } catch (e) {
-      // Save first error but execute all entries
-      if (!error) {
-        error = e;
-      }
-    }
+    newRequire(entry[i]);
   }
 
   if (entry.length) {
@@ -109,13 +103,6 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   // Override the current require with this new one
-  parcelRequire = newRequire;
-
-  if (error) {
-    // throw error from earlier, _after updating parcelRequire_
-    throw error;
-  }
-
   return newRequire;
 })({"node_modules/animejs/lib/anime.es.js":[function(require,module,exports) {
 "use strict";
@@ -16779,6 +16766,11 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+function print(el) {
+  console.log(el);
+}
+
+;
 (0, _animejs.default)({
   targets: '.anim-dot',
   translateY: [0, 24],
@@ -16804,7 +16796,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var source = (0, _rxjs.fromEvent)(document, 'scroll').pipe((0, _operators.map)(function (_) {
   return window.scrollY;
 }), (0, _operators.pairwise)(), (0, _operators.startWith)([window.scrollY, window.scrollY]));
-var appearOffset = 100;
+var appearOffset = window.innerHeight;
 var timeline = document.querySelector('.TIMELINE');
 var timelineContainer = document.querySelector('.TIMELINE-CONTAINER');
 var timelineHeight = timeline.offsetHeight;
@@ -16814,7 +16806,7 @@ var timelineAnimation = (0, _animejs.default)({
   // Works when I set it to translateX with absalute positioning but not percentages against left.
   // translateX: ['0%', '50%'],
   // left: ['0%', '100%'],
-  'margin-left': ['0%', '50%'],
+  'margin-left': ['0%', '80%'],
   autoplay: false
 });
 source.subscribe(function (_ref) {
@@ -16822,15 +16814,21 @@ source.subscribe(function (_ref) {
       y1 = _ref2[0],
       y2 = _ref2[1];
 
-  var seekOffset = Math.min(Math.max((y2 - appearOffset) / timelineHeight, 0), 1);
+  var seekOffset = Math.min(Math.max((y2 - appearOffset) / timelineHeight, 0), 1); // print(`Y1: ${y1} Y2: ${y2} Window: ${window.innerHeight} Container: ${timelineHeight}`);
 
-  if (y2 > window.innerHeight) {
+  if (y2 > window.innerHeight && y2 < timelineHeight) {
+    print('Fixed top');
     timelineContainer.classList.add('fixed');
-  } else {
+  } else if (y2 > timelineHeight) {
+    print('Absolute bottom');
     timelineContainer.classList.remove('fixed');
-  }
+    timelineContainer.classList.add('absolute', 'pin-b');
+  } // else {
+  //     timelineContainer.classList.remove('fixed');
+  // }
+  // // console.log(`Seek: ${timelineAnimation.duration * seekOffset} [${timelineAnimation.duration}, ${y2}, ${window.innerHeight}, ${timelineHeight}]`);
 
-  console.log("Seek: ".concat(timelineAnimation.duration * seekOffset, " [").concat(timelineAnimation.duration, ", ").concat(y2, ", ").concat(window.innerHeight, ", ").concat(timelineHeight, "]"));
+
   timelineAnimation.seek(timelineAnimation.duration * seekOffset);
 }); // const timelineAnimation = anime({
 //     easing: 'linear',
@@ -16895,7 +16893,7 @@ promoVideoCTA.addEventListener('click', function () {
     duration: 500
   });
 });
-},{"animejs":"node_modules/animejs/lib/anime.es.js","rxjs":"node_modules/rxjs/_esm5/index.js","rxjs/operators":"node_modules/rxjs/_esm5/operators/index.js"}],"../../.nvm/versions/node/v10.0.0/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"animejs":"node_modules/animejs/lib/anime.es.js","rxjs":"node_modules/rxjs/_esm5/index.js","rxjs/operators":"node_modules/rxjs/_esm5/operators/index.js"}],"../../../../.nvm/versions/node/v11.2.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -16917,46 +16915,26 @@ function Module(moduleName) {
 }
 
 module.bundle.Module = Module;
-var checkedAssets, assetsToAccept;
 var parent = module.bundle.parent;
 
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59473" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61200" + '/');
 
   ws.onmessage = function (event) {
-    checkedAssets = {};
-    assetsToAccept = [];
     var data = JSON.parse(event.data);
 
     if (data.type === 'update') {
-      var handled = false;
+      console.clear();
+      data.assets.forEach(function (asset) {
+        hmrApply(global.parcelRequire, asset);
+      });
       data.assets.forEach(function (asset) {
         if (!asset.isNew) {
-          var didAccept = hmrAcceptCheck(global.parcelRequire, asset.id);
-
-          if (didAccept) {
-            handled = true;
-          }
+          hmrAccept(global.parcelRequire, asset.id);
         }
-      }); // Enable HMR for CSS by default.
-
-      handled = handled || data.assets.every(function (asset) {
-        return asset.type === 'css' && asset.generated.js;
       });
-
-      if (handled) {
-        console.clear();
-        data.assets.forEach(function (asset) {
-          hmrApply(global.parcelRequire, asset);
-        });
-        assetsToAccept.forEach(function (v) {
-          hmrAcceptRun(v[0], v[1]);
-        });
-      } else {
-        window.location.reload();
-      }
     }
 
     if (data.type === 'reload') {
@@ -17044,7 +17022,7 @@ function hmrApply(bundle, asset) {
   }
 }
 
-function hmrAcceptCheck(bundle, id) {
+function hmrAccept(bundle, id) {
   var modules = bundle.modules;
 
   if (!modules) {
@@ -17052,27 +17030,9 @@ function hmrAcceptCheck(bundle, id) {
   }
 
   if (!modules[id] && bundle.parent) {
-    return hmrAcceptCheck(bundle.parent, id);
+    return hmrAccept(bundle.parent, id);
   }
 
-  if (checkedAssets[id]) {
-    return;
-  }
-
-  checkedAssets[id] = true;
-  var cached = bundle.cache[id];
-  assetsToAccept.push([bundle, id]);
-
-  if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
-    return true;
-  }
-
-  return getParents(global.parcelRequire, id).some(function (id) {
-    return hmrAcceptCheck(global.parcelRequire, id);
-  });
-}
-
-function hmrAcceptRun(bundle, id) {
   var cached = bundle.cache[id];
   bundle.hotData = {};
 
@@ -17097,6 +17057,10 @@ function hmrAcceptRun(bundle, id) {
 
     return true;
   }
+
+  return getParents(global.parcelRequire, id).some(function (id) {
+    return hmrAccept(global.parcelRequire, id);
+  });
 }
-},{}]},{},["../../.nvm/versions/node/v10.0.0/lib/node_modules/parcel/src/builtins/hmr-runtime.js","src/index.js"], null)
-//# sourceMappingURL=/src.a2b27638.js.map
+},{}]},{},["../../../../.nvm/versions/node/v11.2.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/index.js"], null)
+//# sourceMappingURL=/src.a2b27638.map
