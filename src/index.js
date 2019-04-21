@@ -33,21 +33,28 @@ const source = fromEvent(document, 'scroll').pipe(
     startWith([window.scrollY, window.scrollY])
 );
 
-const appearOffset = 1000;
-const timelineContainer = document.querySelector('.TIMELINE');
-const timelineHeight = timelineContainer.offsetHeight;
+const appearOffset = 100;
+const timeline = document.querySelector('.TIMELINE');
+const timelineContainer = document.querySelector('.TIMELINE-CONTAINER');
+const timelineHeight = timeline.offsetHeight;
 
 const timelineAnimation = anime({
     easing: 'linear',
     targets: '.TIMELINE__EVENTS',
     // Works when I set it to translateX with absalute positioning but not percentages against left.
-    translateX: ['0%', '50%'],
+    // translateX: ['0%', '50%'],
     // left: ['0%', '100%'],
+    'margin-left': ['0%', '50%'],
     autoplay: false
 });
 
 source.subscribe(([y1, y2]) => {
     const seekOffset = Math.min(Math.max((y2 - appearOffset) / timelineHeight, 0), 1);
+    if (y2 > window.innerHeight) { 
+        timelineContainer.classList.add('fixed');
+    } else {
+        timelineContainer.classList.remove('fixed');
+    }
     console.log(`Seek: ${timelineAnimation.duration * seekOffset} [${timelineAnimation.duration}, ${y2}, ${window.innerHeight}, ${timelineHeight}]`);
     timelineAnimation.seek(timelineAnimation.duration * seekOffset);
 });

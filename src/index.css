@@ -29,6 +29,13 @@
     padding: 20px 0;
 }
 
+.TIMELINE-CONTAINER {
+    margin-top: 50px;
+    max-width: 100vw;
+    padding: 0 50px;
+    top: 0;
+}
+
 .timeline {
     height: 3px;
     width: 0px;
