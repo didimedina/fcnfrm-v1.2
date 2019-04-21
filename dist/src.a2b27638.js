@@ -5,8 +5,6 @@
 //
 // anything defined in a previous bundle is accessed via the
 // orig method which is the require for previous bundles
-
-// eslint-disable-next-line no-global-assign
 parcelRequire = (function (modules, cache, entry, globalName) {
   // Save the require from previous bundle to this closure if any
   var previousRequire = typeof parcelRequire === 'function' && parcelRequire;
@@ -77,8 +75,16 @@ parcelRequire = (function (modules, cache, entry, globalName) {
     }, {}];
   };
 
+  var error;
   for (var i = 0; i < entry.length; i++) {
-    newRequire(entry[i]);
+    try {
+      newRequire(entry[i]);
+    } catch (e) {
+      // Save first error but execute all entries
+      if (!error) {
+        error = e;
+      }
+    }
   }
 
   if (entry.length) {
@@ -103,6 +109,13 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   // Override the current require with this new one
+  parcelRequire = newRequire;
+
+  if (error) {
+    // throw error from earlier, _after updating parcelRequire_
+    throw error;
+  }
+
   return newRequire;
 })({"node_modules/animejs/lib/anime.es.js":[function(require,module,exports) {
 "use strict";
@@ -16815,20 +16828,24 @@ source.subscribe(function (_ref) {
       y2 = _ref2[1];
 
   var seekOffset = Math.min(Math.max((y2 - appearOffset) / timelineHeight, 0), 1); // print(`Y1: ${y1} Y2: ${y2} Window: ${window.innerHeight} Container: ${timelineHeight}`);
+  // Always 'clean' the timeline classes
 
-  if (y2 > window.innerHeight && y2 < timelineHeight) {
+  timelineContainer.classList.remove('fixed', 'absolute', 'tl-pin'); // Now add the proper classes based on the condition
+
+  if (y2 < window.innerHeight) {
+    timelineContainer.classList.add('absolute');
+  } else if (y2 >= window.innerHeight && y2 < timelineHeight + window.innerHeight * 0.2 - window.innerHeight * 0.5) {
     print('Fixed top');
     timelineContainer.classList.add('fixed');
-  } else if (y2 > timelineHeight) {
+  } else if (y2 >= timelineHeight + window.innerHeight * 0.2 - window.innerHeight * 0.5) {
     print('Absolute bottom');
-    timelineContainer.classList.remove('fixed');
-    timelineContainer.classList.add('absolute', 'pin-b');
+    timelineContainer.classList.add('absolute', 'tl-pin');
   } // else {
   //     timelineContainer.classList.remove('fixed');
   // }
-  // // console.log(`Seek: ${timelineAnimation.duration * seekOffset} [${timelineAnimation.duration}, ${y2}, ${window.innerHeight}, ${timelineHeight}]`);
 
 
+  console.log("Seek: ".concat(timelineAnimation.duration * seekOffset, " [").concat(timelineAnimation.duration, ", ").concat(y2, ", ").concat(window.innerHeight, ", ").concat(timelineHeight, "]"));
   timelineAnimation.seek(timelineAnimation.duration * seekOffset);
 }); // const timelineAnimation = anime({
 //     easing: 'linear',
@@ -16893,7 +16910,7 @@ promoVideoCTA.addEventListener('click', function () {
     duration: 500
   });
 });
-},{"animejs":"node_modules/animejs/lib/anime.es.js","rxjs":"node_modules/rxjs/_esm5/index.js","rxjs/operators":"node_modules/rxjs/_esm5/operators/index.js"}],"../../../../.nvm/versions/node/v11.2.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"animejs":"node_modules/animejs/lib/anime.es.js","rxjs":"node_modules/rxjs/_esm5/index.js","rxjs/operators":"node_modules/rxjs/_esm5/operators/index.js"}],"../../.nvm/versions/node/v10.0.0/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -16915,26 +16932,46 @@ function Module(moduleName) {
 }
 
 module.bundle.Module = Module;
+var checkedAssets, assetsToAccept;
 var parent = module.bundle.parent;
 
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61200" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60296" + '/');
 
   ws.onmessage = function (event) {
+    checkedAssets = {};
+    assetsToAccept = [];
     var data = JSON.parse(event.data);
 
     if (data.type === 'update') {
-      console.clear();
-      data.assets.forEach(function (asset) {
-        hmrApply(global.parcelRequire, asset);
-      });
+      var handled = false;
       data.assets.forEach(function (asset) {
         if (!asset.isNew) {
-          hmrAccept(global.parcelRequire, asset.id);
+          var didAccept = hmrAcceptCheck(global.parcelRequire, asset.id);
+
+          if (didAccept) {
+            handled = true;
+          }
         }
+      }); // Enable HMR for CSS by default.
+
+      handled = handled || data.assets.every(function (asset) {
+        return asset.type === 'css' && asset.generated.js;
       });
+
+      if (handled) {
+        console.clear();
+        data.assets.forEach(function (asset) {
+          hmrApply(global.parcelRequire, asset);
+        });
+        assetsToAccept.forEach(function (v) {
+          hmrAcceptRun(v[0], v[1]);
+        });
+      } else {
+        window.location.reload();
+      }
     }
 
     if (data.type === 'reload') {
@@ -17022,7 +17059,7 @@ function hmrApply(bundle, asset) {
   }
 }
 
-function hmrAccept(bundle, id) {
+function hmrAcceptCheck(bundle, id) {
   var modules = bundle.modules;
 
   if (!modules) {
@@ -17030,9 +17067,27 @@ function hmrAccept(bundle, id) {
   }
 
   if (!modules[id] && bundle.parent) {
-    return hmrAccept(bundle.parent, id);
+    return hmrAcceptCheck(bundle.parent, id);
   }
 
+  if (checkedAssets[id]) {
+    return;
+  }
+
+  checkedAssets[id] = true;
+  var cached = bundle.cache[id];
+  assetsToAccept.push([bundle, id]);
+
+  if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
+    return true;
+  }
+
+  return getParents(global.parcelRequire, id).some(function (id) {
+    return hmrAcceptCheck(global.parcelRequire, id);
+  });
+}
+
+function hmrAcceptRun(bundle, id) {
   var cached = bundle.cache[id];
   bundle.hotData = {};
 
@@ -17057,10 +17112,6 @@ function hmrAccept(bundle, id) {
 
     return true;
   }
-
-  return getParents(global.parcelRequire, id).some(function (id) {
-    return hmrAccept(global.parcelRequire, id);
-  });
 }
-},{}]},{},["../../../../.nvm/versions/node/v11.2.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/index.js"], null)
-//# sourceMappingURL=/src.a2b27638.map
+},{}]},{},["../../.nvm/versions/node/v10.0.0/lib/node_modules/parcel/src/builtins/hmr-runtime.js","src/index.js"], null)
+//# sourceMappingURL=/src.a2b27638.js.map

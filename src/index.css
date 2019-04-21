@@ -30,10 +30,15 @@
 }
 
 .TIMELINE-CONTAINER {
-    margin-top: 50px;
-    max-width: 100vw;
-    padding: 0 50px;
-    top: 0;
+    bottom: initial;
+    top: 50vh;
+    transform: translateY(-25%);
+}
+
+.TIMELINE-CONTAINER.tl-pin {
+    bottom: 50vh;
+    top: initial;
+    transform: translateY(25%);
 }
 
 .timeline {

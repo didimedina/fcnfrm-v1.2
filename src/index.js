@@ -55,19 +55,23 @@ const timelineAnimation = anime({
 source.subscribe(([y1, y2]) => {
     const seekOffset = Math.min(Math.max((y2 - appearOffset) / timelineHeight, 0), 1);
     // print(`Y1: ${y1} Y2: ${y2} Window: ${window.innerHeight} Container: ${timelineHeight}`);
-    if (y2 > window.innerHeight && y2 < timelineHeight) {
+
+    // Always 'clean' the timeline classes
+    timelineContainer.classList.remove('fixed', 'absolute', 'tl-pin');
+    // Now add the proper classes based on the condition
+    if (y2 < window.innerHeight) {
+        timelineContainer.classList.add('absolute');
+    } else if(y2 >= window.innerHeight && y2 < (timelineHeight + window.innerHeight * 0.2 - window.innerHeight * 0.5)) {
         print('Fixed top');
         timelineContainer.classList.add('fixed');
-    } 
-    else if (y2 > timelineHeight) {
+    } else if (y2 >= (timelineHeight + window.innerHeight * 0.2 - window.innerHeight * 0.5)) {
         print('Absolute bottom');
-        timelineContainer.classList.remove('fixed');
-        timelineContainer.classList.add('absolute', 'pin-b');
+        timelineContainer.classList.add('absolute', 'tl-pin');
     }  
     // else {
     //     timelineContainer.classList.remove('fixed');
     // }
-    // // console.log(`Seek: ${timelineAnimation.duration * seekOffset} [${timelineAnimation.duration}, ${y2}, ${window.innerHeight}, ${timelineHeight}]`);
+    console.log(`Seek: ${timelineAnimation.duration * seekOffset} [${timelineAnimation.duration}, ${y2}, ${window.innerHeight}, ${timelineHeight}]`);
     timelineAnimation.seek(timelineAnimation.duration * seekOffset);
 });
 
