@@ -5,6 +5,8 @@
 //
 // anything defined in a previous bundle is accessed via the
 // orig method which is the require for previous bundles
+
+// eslint-disable-next-line no-global-assign
 parcelRequire = (function (modules, cache, entry, globalName) {
   // Save the require from previous bundle to this closure if any
   var previousRequire = typeof parcelRequire === 'function' && parcelRequire;
@@ -75,16 +77,8 @@ parcelRequire = (function (modules, cache, entry, globalName) {
     }, {}];
   };
 
-  var error;
   for (var i = 0; i < entry.length; i++) {
-    try {
-      newRequire(entry[i]);
-    } catch (e) {
-      // Save first error but execute all entries
-      if (!error) {
-        error = e;
-      }
-    }
+    newRequire(entry[i]);
   }
 
   if (entry.length) {
@@ -109,13 +103,6 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   // Override the current require with this new one
-  parcelRequire = newRequire;
-
-  if (error) {
-    // throw error from earlier, _after updating parcelRequire_
-    throw error;
-  }
-
   return newRequire;
 })({"node_modules/animejs/lib/anime.es.js":[function(require,module,exports) {
 "use strict";
@@ -16791,12 +16778,7 @@ function print(el) {
   opacity: [1, 0],
   easing: 'easeOutQuad',
   duration: 1200
-}); // const timelineContainer = document.getElementById('timeline-container');
-// const timelineOffset = timelineContainer.offsetTop;
-// const timelineHeight = timelineContainer.offsetHeight;
-// const appearOffset = 100;
-// const disappearOffset = 150;
-// const timelineMessages = [
+}); // const timelineMessages = [
 //     { id: 'timeline-message-1'},
 //     { id: 'timeline-message-2'},
 //     { id: 'timeline-message-3'},
@@ -16813,12 +16795,23 @@ var appearOffset = window.innerHeight;
 var timeline = document.querySelector('.TIMELINE');
 var timelineContainer = document.querySelector('.TIMELINE-CONTAINER');
 var timelineHeight = timeline.offsetHeight;
-var timelineAnimation = (0, _animejs.default)({
+var timelineMessages = document.querySelectorAll('.TIMELINE__MESSAGE');
+
+function setOffset(el, threshold) {
+  var elRect = el.getBoundingClientRect(),
+      bodyRect = document.body.getBoundingClientRect(),
+      offset = elRect.top - bodyRect.top;
+  alert('Element is ' + offset + ' vertical pixels from <body>');
+}
+
+var el = timelineContainer;
+var elRect = el.getBoundingClientRect(),
+    bodyRect = document.body.getBoundingClientRect(),
+    offset = elRect.top - bodyRect.top;
+print('Element is ' + offset + ' vertical pixels from <body>');
+var timelinePinAnimation = (0, _animejs.default)({
   easing: 'linear',
   targets: '.TIMELINE__EVENTS',
-  // Works when I set it to translateX with absalute positioning but not percentages against left.
-  // translateX: ['0%', '50%'],
-  // left: ['0%', '100%'],
   'margin-left': ['0%', '80%'],
   autoplay: false
 });
@@ -16835,40 +16828,35 @@ source.subscribe(function (_ref) {
   if (y2 < window.innerHeight) {
     timelineContainer.classList.add('absolute');
   } else if (y2 >= window.innerHeight && y2 < timelineHeight + window.innerHeight * 0.2 - window.innerHeight * 0.5) {
-    print('Fixed top');
+    // print('Fixed top');
     timelineContainer.classList.add('fixed');
+    print("Y2: ".concat(y2, " ").concat((appearOffset + timelineHeight) * .4));
+
+    if (y2 < (appearOffset + timelineHeight) * .4) {//show msg-2 
+      // print('msg-2');
+    } else if (y2 < timelineHeight * .2) {// show msg-3
+      // print('msg-2');
+    }
   } else if (y2 >= timelineHeight + window.innerHeight * 0.2 - window.innerHeight * 0.5) {
-    print('Absolute bottom');
+    // print('Absolute bottom');
     timelineContainer.classList.add('absolute', 'tl-pin');
-  } // else {
-  //     timelineContainer.classList.remove('fixed');
-  // }
+  } // console.log(`Seek: ${timelinePinAnimation.duration * seekOffset} [${timelinePinAnimation.duration}, ${y2}, ${window.innerHeight}, ${timelineHeight}]`);
 
 
-  console.log("Seek: ".concat(timelineAnimation.duration * seekOffset, " [").concat(timelineAnimation.duration, ", ").concat(y2, ", ").concat(window.innerHeight, ", ").concat(timelineHeight, "]"));
-  timelineAnimation.seek(timelineAnimation.duration * seekOffset);
-}); // const timelineAnimation = anime({
-//     easing: 'linear',
-//     targets: '.timeline',
-//     width: ['0%', '100%'],
-//     autoplay: false
-// });
-// source.subscribe(([y1, y2]) => {
-//     const seekOffset = Math.min(Math.max(( y2 - appearOffset ) / timelineHeight, 0), 1);
-//     console.log(`Seek: ${timelineAnimation.duration * seekOffset} [${timelineAnimation.duration}, ${y2}, ${window.innerHeight}, ${timelineHeight}]`);
-//     timelineAnimation.seek( timelineAnimation.duration * seekOffset );
-// });
-// for (const message of timelineMessages) {
+  timelinePinAnimation.seek(timelinePinAnimation.duration * seekOffset);
+});
+print(timelineMessages); // for (const message of timelineMessages) {
 //     // For each message:
 //     // - calculate the threshold
 //     // - initialize the animation
 //     // - set the observables for appear and disappear
 //     const messageElement = document.getElementById(message.id);
+//     // print(messageElement);
 //     // Add appearOffset so that the element is entirely visible when starting to animate
 //     message.threshold = timelineOffset - window.innerHeight + messageElement.offsetTop + appearOffset;
 //     message.animation = anime({
 //         targets: `#${message.id}`,
-//         left: ['-50%', '50%'],
+//         left: ['-5%', '0%'],
 //         duration: 500,
 //         autoplay: false,
 //         easing: 'cubicBezier(.5, .05, .1, .3)'
@@ -16910,7 +16898,7 @@ promoVideoCTA.addEventListener('click', function () {
     duration: 500
   });
 });
-},{"animejs":"node_modules/animejs/lib/anime.es.js","rxjs":"node_modules/rxjs/_esm5/index.js","rxjs/operators":"node_modules/rxjs/_esm5/operators/index.js"}],"../../.nvm/versions/node/v10.0.0/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"animejs":"node_modules/animejs/lib/anime.es.js","rxjs":"node_modules/rxjs/_esm5/index.js","rxjs/operators":"node_modules/rxjs/_esm5/operators/index.js"}],"../../../../.nvm/versions/node/v11.2.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -16932,46 +16920,26 @@ function Module(moduleName) {
 }
 
 module.bundle.Module = Module;
-var checkedAssets, assetsToAccept;
 var parent = module.bundle.parent;
 
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60296" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59637" + '/');
 
   ws.onmessage = function (event) {
-    checkedAssets = {};
-    assetsToAccept = [];
     var data = JSON.parse(event.data);
 
     if (data.type === 'update') {
-      var handled = false;
+      console.clear();
+      data.assets.forEach(function (asset) {
+        hmrApply(global.parcelRequire, asset);
+      });
       data.assets.forEach(function (asset) {
         if (!asset.isNew) {
-          var didAccept = hmrAcceptCheck(global.parcelRequire, asset.id);
-
-          if (didAccept) {
-            handled = true;
-          }
+          hmrAccept(global.parcelRequire, asset.id);
         }
-      }); // Enable HMR for CSS by default.
-
-      handled = handled || data.assets.every(function (asset) {
-        return asset.type === 'css' && asset.generated.js;
       });
-
-      if (handled) {
-        console.clear();
-        data.assets.forEach(function (asset) {
-          hmrApply(global.parcelRequire, asset);
-        });
-        assetsToAccept.forEach(function (v) {
-          hmrAcceptRun(v[0], v[1]);
-        });
-      } else {
-        window.location.reload();
-      }
     }
 
     if (data.type === 'reload') {
@@ -17059,7 +17027,7 @@ function hmrApply(bundle, asset) {
   }
 }
 
-function hmrAcceptCheck(bundle, id) {
+function hmrAccept(bundle, id) {
   var modules = bundle.modules;
 
   if (!modules) {
@@ -17067,27 +17035,9 @@ function hmrAcceptCheck(bundle, id) {
   }
 
   if (!modules[id] && bundle.parent) {
-    return hmrAcceptCheck(bundle.parent, id);
+    return hmrAccept(bundle.parent, id);
   }
 
-  if (checkedAssets[id]) {
-    return;
-  }
-
-  checkedAssets[id] = true;
-  var cached = bundle.cache[id];
-  assetsToAccept.push([bundle, id]);
-
-  if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
-    return true;
-  }
-
-  return getParents(global.parcelRequire, id).some(function (id) {
-    return hmrAcceptCheck(global.parcelRequire, id);
-  });
-}
-
-function hmrAcceptRun(bundle, id) {
   var cached = bundle.cache[id];
   bundle.hotData = {};
 
@@ -17112,6 +17062,10 @@ function hmrAcceptRun(bundle, id) {
 
     return true;
   }
+
+  return getParents(global.parcelRequire, id).some(function (id) {
+    return hmrAccept(global.parcelRequire, id);
+  });
 }
-},{}]},{},["../../.nvm/versions/node/v10.0.0/lib/node_modules/parcel/src/builtins/hmr-runtime.js","src/index.js"], null)
-//# sourceMappingURL=/src.a2b27638.js.map
+},{}]},{},["../../../../.nvm/versions/node/v11.2.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/index.js"], null)
+//# sourceMappingURL=/src.a2b27638.map

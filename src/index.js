@@ -15,12 +15,6 @@ anime({
     duration: 1200
 });
 
-// const timelineContainer = document.getElementById('timeline-container');
-// const timelineOffset = timelineContainer.offsetTop;
-// const timelineHeight = timelineContainer.offsetHeight;
-// const appearOffset = 100;
-// const disappearOffset = 150;
-
 // const timelineMessages = [
 //     { id: 'timeline-message-1'},
 //     { id: 'timeline-message-2'},
@@ -41,13 +35,27 @@ const appearOffset = window.innerHeight;
 const timeline = document.querySelector('.TIMELINE');
 const timelineContainer = document.querySelector('.TIMELINE-CONTAINER');
 const timelineHeight = timeline.offsetHeight;
+const timelineMessages = document.querySelectorAll('.TIMELINE__MESSAGE');
 
-const timelineAnimation = anime({
+function setOffset(el, threshold) {
+    let elRect = el.getBoundingClientRect(),
+        bodyRect = document.body.getBoundingClientRect(),
+        offset = elRect.top - bodyRect.top;
+
+    alert('Element is ' + offset + ' vertical pixels from <body>');
+}
+
+let el = timelineContainer;
+
+let elRect = el.getBoundingClientRect(),
+    bodyRect = document.body.getBoundingClientRect(),
+    offset = elRect.top - bodyRect.top;
+
+print('Element is ' + offset + ' vertical pixels from <body>');
+
+const timelinePinAnimation = anime({
     easing: 'linear',
     targets: '.TIMELINE__EVENTS',
-    // Works when I set it to translateX with absalute positioning but not percentages against left.
-    // translateX: ['0%', '50%'],
-    // left: ['0%', '100%'],
     'margin-left': ['0%', '80%'],
     autoplay: false
 });
@@ -62,33 +70,29 @@ source.subscribe(([y1, y2]) => {
     if (y2 < window.innerHeight) {
         timelineContainer.classList.add('absolute');
     } else if(y2 >= window.innerHeight && y2 < (timelineHeight + window.innerHeight * 0.2 - window.innerHeight * 0.5)) {
-        print('Fixed top');
+        // print('Fixed top');
         timelineContainer.classList.add('fixed');
+        print(`Y2: ${y2} ${(appearOffset + timelineHeight) * .4}`)
+        if  (y2 < (appearOffset + timelineHeight) * .4){
+            //show msg-2 
+            // print('msg-2');
+        } else if (y2 < timelineHeight * .2) {
+            // show msg-3
+            // print('msg-2');
+        }
+        
     } else if (y2 >= (timelineHeight + window.innerHeight * 0.2 - window.innerHeight * 0.5)) {
-        print('Absolute bottom');
+        // print('Absolute bottom');
         timelineContainer.classList.add('absolute', 'tl-pin');
     }  
-    // else {
-    //     timelineContainer.classList.remove('fixed');
-    // }
-    console.log(`Seek: ${timelineAnimation.duration * seekOffset} [${timelineAnimation.duration}, ${y2}, ${window.innerHeight}, ${timelineHeight}]`);
-    timelineAnimation.seek(timelineAnimation.duration * seekOffset);
+
+    // console.log(`Seek: ${timelinePinAnimation.duration * seekOffset} [${timelinePinAnimation.duration}, ${y2}, ${window.innerHeight}, ${timelineHeight}]`);
+    timelinePinAnimation.seek(timelinePinAnimation.duration * seekOffset);
 });
 
 
 
-// const timelineAnimation = anime({
-//     easing: 'linear',
-//     targets: '.timeline',
-//     width: ['0%', '100%'],
-//     autoplay: false
-// });
-
-// source.subscribe(([y1, y2]) => {
-//     const seekOffset = Math.min(Math.max(( y2 - appearOffset ) / timelineHeight, 0), 1);
-//     console.log(`Seek: ${timelineAnimation.duration * seekOffset} [${timelineAnimation.duration}, ${y2}, ${window.innerHeight}, ${timelineHeight}]`);
-//     timelineAnimation.seek( timelineAnimation.duration * seekOffset );
-// });
+print(timelineMessages);
 
 // for (const message of timelineMessages) {
 //     // For each message:
@@ -97,11 +101,12 @@ source.subscribe(([y1, y2]) => {
 //     // - set the observables for appear and disappear
     
 //     const messageElement = document.getElementById(message.id);
+//     // print(messageElement);
 //     // Add appearOffset so that the element is entirely visible when starting to animate
 //     message.threshold = timelineOffset - window.innerHeight + messageElement.offsetTop + appearOffset;
 //     message.animation = anime({
 //         targets: `#${message.id}`,
-//         left: ['-50%', '50%'],
+//         left: ['-5%', '0%'],
 //         duration: 500,
 //         autoplay: false,
 //         easing: 'cubicBezier(.5, .05, .1, .3)'
